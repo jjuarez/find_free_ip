@@ -1,3 +1,12 @@
 #!/usr/bin/env ruby
+lib_path = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH<< lib_path unless $LOAD_PATH.include?(lib_path)
 
-require "find_free_ip"
+
+begin
+  require "find_free_ip"
+rescue => e
+  fail('...')
+else
+  FindFreeIP::Check.start
+end
