@@ -1,14 +1,13 @@
 # encoding: utf-8
 require 'thor'
-require 'ipaddr'
+require 'ipaddress'
 
 
 module FindFreeIP
   class Check < Thor
 
-    DEFAULT_TIMEOUT  = 1
-    DEFAULT_TRIES    = 1
-    DEFAULT_EXCLUDED = [0,1,2,3,4,5,6,7,8,9,10,254]
+    DEFAULT_TIMEOUT = 1
+    DEFAULT_TRIES   = 1
 
     no_tasks do
 
@@ -17,19 +16,20 @@ module FindFreeIP
       end
     end
 
+
     desc "find", "Tries to find a free IP in a network"
-    option :network, :required =>true,  :type =>:string, :aliases =>'-n', :desc =>'The base directory for the backups'
+    option :network,  :required =>true,  :type =>:string, :aliases =>'-n', :desc =>'The CIDR IP expression'
+    option :reserved, :required =>false, :type =>:string, :aliases =>'-r', :default => '', :desc =>'The host reserved in the network'
     def find()
 
-      network = IPAddr.new(options[:network]).to_range
+      reserved = options[:reserved].split(',').map { |r| r.to_i } 
+      network  = IPAddress.parse(options[:network])
 
       network.each do |ip_address|
 
-        nh = ip_address.to_s.split('.').last.to_i
+        next if reserved.include?(ip_address.to_s.split('.').last.to_i)
 
-        unless DEFAULT_EXCLUDED.include?(nh)
-          $stdout.puts ip_address unless ping(ip_address)
-        end
+        $stdout.puts ip_address unless ping(ip_address)
       end
     end
 
