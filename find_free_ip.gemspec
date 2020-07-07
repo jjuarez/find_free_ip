@@ -10,9 +10,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Javier Juarez"]
   spec.email         = ["jjuarez@tuenti.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "This small tool may help you to find a free IP address in your network"
+  spec.description   = "This small tool may help you to find a free IP address in your network"
+  spec.homepage      = "https://github.com/jjuare/find_free_ip"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
@@ -24,6 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "ipaddress", "~>0.8.0"
 
   spec.add_development_dependency "bundler", "~> 1.10"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake", "~> 12.3.3"
   spec.add_development_dependency "rspec"
 end
